@@ -13,11 +13,6 @@ export default class Regexper {
     this.field = root.querySelector('#regexp-input');
     this.error = root.querySelector('#error');
     this.warnings = root.querySelector('#warnings');
-
-    this.links = this.form.querySelector('ul');
-    this.permalink = this.links.querySelector('a[data-action="permalink"]');
-    this.download = this.links.querySelector('a[data-action="download"]');
-
     this.svgContainer = root.querySelector('#regexp-render');
   }
 
@@ -56,7 +51,6 @@ export default class Regexper {
     catch(e) {
       // Failed to set the URL hash (probably because the expression is too
       // long). Turn off display of the permalink and just show the expression.
-      this.permalinkEnabled = false;
       this.showExpression(this.field.value);
     }
   }
@@ -70,7 +64,6 @@ export default class Regexper {
       this.error.innerHTML = 'Malformed expression in URL';
       util.track('send', 'event', 'visualization', 'malformed URL');
     } else {
-      this.permalinkEnabled = true;
       this.showExpression(expr);
     }
   }
@@ -150,32 +143,6 @@ export default class Regexper {
     return URL.createObjectURL(window.blob);
   }
 
-  // Update the URLs of the 'download' and 'permalink' links.
-  updateLinks() {
-    let classes = _.without(this.links.className.split(' '), ['hide-download', 'hide-permalink']);
-
-    // Create the 'download' image URL.
-    try {
-      this.download.parentNode.style.display = null;
-      this.download.href = this.buildBlobURL(this.svgContainer.querySelector('.svg').innerHTML);
-    }
-    catch(e) {
-      // Blobs or URLs created from a blob URL don't work in the current
-      // browser. Giving up on the download link.
-      classes.push('hide-download');
-    }
-
-    // Create the 'permalink' URL.
-    if (this.permalinkEnabled) {
-      this.permalink.parentNode.style.display = null;
-      this.permalink.href = location.toString();
-    } else {
-      classes.push('hide-permalink');
-    }
-
-    this.links.className = classes.join(' ');
-  }
-
   // Display any warnings that were generated while rendering a regular expression.
   //
   // - __warnings__ - Array of warning messages to display.
@@ -227,7 +194,6 @@ export default class Regexper {
       //  - Track the completion of the render and how long it took
       .then(() => {
         this.state = 'has-results';
-        this.updateLinks();
         this.displayWarnings(this.running.warnings);
         util.track('send', 'event', 'visualization', 'complete');
 
