@@ -5,7 +5,6 @@ body {
   font-family: sans-serif;
   font-size: $base-font-size;
   line-height: $base-line-height;
-  background: $gray;
   margin-bottom: rhythm(1);
 }
 
@@ -373,4 +372,20 @@ footer {
     width: 80px;
     height: 15px;
   }
+}
+
+canvas {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+  min-width: 100%;
+  z-index: -1;
+}
+
+#content .application button,
+textarea,
+#regexp-render {
+  border-radius: 6px;
 }

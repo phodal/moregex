@@ -53,5 +53,8 @@
     "snapsvg": "^0.4.0",
     "watchify": "^3.7.0",
     "webpack": "^1.13.2"
+  },
+  "dependencies": {
+    "trianglify": "^1.0.1"
   }
 }
