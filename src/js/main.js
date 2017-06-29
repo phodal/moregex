@@ -11,20 +11,6 @@ import Parser from './parser/javascript.js';
 import _ from 'lodash';
 
 import Trianglify from 'trianglify'
-const pattern = Trianglify({
-  width: window.innerWidth,
-  height: window.innerHeight,
-  x_colors: 'random',
-  y_colors: 'match_x',
-  cell_size: 75,
-  variance: 0.75,
-  palette: Trianglify.colorbrewer,
-  color_space: 'lab',
-  color_function: false,
-  stroke_width: 1.51,
-});
-
-document.body.appendChild(pattern.canvas())
 
 (function() {
   // Global error handler that will send unhandled JavaScript exceptions and
@@ -65,4 +51,19 @@ document.body.appendChild(pattern.canvas())
       })
       .catch(util.exposeError);
   });
+
+  const pattern = Trianglify({
+    width: window.innerWidth,
+    height: window.innerHeight,
+    x_colors: 'random',
+    y_colors: 'match_x',
+    cell_size: 75,
+    variance: 0.75,
+    palette: Trianglify.colorbrewer,
+    color_space: 'lab',
+    color_function: false,
+    stroke_width: 1.51,
+  });
+
+  document.body.appendChild(pattern.canvas())
 }());
