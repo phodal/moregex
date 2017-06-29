@@ -5,6 +5,7 @@ body {
   font-family: sans-serif;
   font-size: $base-font-size;
   line-height: $base-line-height;
+  background-color: #eee;
   margin-bottom: rhythm(1);
 }
 
@@ -244,7 +245,7 @@ header {
       @include adjust-font-size-to($base-font-size);
       border: 0 none;
       outline: none;
-      background: $tan;
+      background: #fff;
       padding: 0 0.5em;
       width: 100% !important; // "!important" prevents user changing width
       box-sizing: border-box;
@@ -259,9 +260,12 @@ header {
       @include adjust-font-size-to($base-font-size);
       width: 100px;
       border: 0 none;
-      @include linear-gradient(top, $green, $dark-green);
+      @include linear-gradient(top, #03a9f4,#4183c4);
       float: left;
       cursor: pointer;
+      margin-top: 15px;
+      color: #fff;
+      background-color: #03a9f4;
     }
 
     ul {
