@@ -38,6 +38,32 @@ import Trianglify from 'trianglify'
     util.tick().then(() => {
       window.dispatchEvent(util.customEvent('hashchange'));
     });
+
+    window.postMessage(JSON.stringify({status: 'ready'}));
+
+    document.addEventListener('message', function (e) {
+        let data = JSON.parse(e.data);
+        if (data.action === 'trigger') {
+          const pattern = Trianglify({
+              width: window.innerWidth,
+              height: window.innerHeight,
+              x_colors: 'random',
+              y_colors: 'match_x',
+              cell_size: 75,
+              variance: 0.75,
+              palette: Trianglify.colorbrewer,
+              color_space: 'lab',
+              color_function: false,
+              stroke_width: 1.51
+            });
+
+          document.body.appendChild(pattern.canvas());
+
+          window.postMessage(JSON.stringify({status: 'ready'}));
+        } else {
+          regexper.showExpression(data.regex);
+        }
+      });
   }
 
   // Initialize other pages on the site (specifically the documentation page).
@@ -51,19 +77,4 @@ import Trianglify from 'trianglify'
       })
       .catch(util.exposeError);
   });
-
-  const pattern = Trianglify({
-    width: window.innerWidth,
-    height: window.innerHeight,
-    x_colors: 'random',
-    y_colors: 'match_x',
-    cell_size: 75,
-    variance: 0.75,
-    palette: Trianglify.colorbrewer,
-    color_space: 'lab',
-    color_function: false,
-    stroke_width: 1.51,
-  });
-
-  document.body.appendChild(pattern.canvas())
 }());
